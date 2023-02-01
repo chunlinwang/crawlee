@@ -3,16 +3,20 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-node-playwright-chrome:16 AS builder
 
+WORKDIR /app
+
+COPY . .
+
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
-COPY --chown=myuser package*.json ./
+# COPY --chown=myuser package*.json ./
 
 # Install all dependencies. Don't audit to speed up the installation.
 RUN npm install --include=dev --audit=false
 
 # Next, copy the source files using the user set
 # in the base image.
-COPY --chown=myuser . ./
+# COPY --chown=myuser . ./
 
 # Install all dependencies and build the project.
 # Don't audit to speed up the installation.

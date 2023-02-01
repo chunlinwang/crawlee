@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  app: 
+    build: 
+      context: .
+      target: builder
+    networks:
+      - web  
+    tty: true
+    volumes:
+      - ./:/app
+  
+  db:
+    image: postgres
+    restart: always
+    networks:
+      - web
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  pgdata:
+
+networks:
+  web: 
